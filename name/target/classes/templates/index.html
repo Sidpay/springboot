@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>User Registration</title>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form id="registrationForm" action="/users" method="post">
+        First Name: <input type="text" name="firstName"><br>
+        Middle Name: <input type="text" name="middleName"><br>
+        Last Name: <input type="text" name="lastName"><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            // Generate password based on entered names
+            var firstName = document.getElementsByName('firstName')[0].value;
+            var middleName = document.getElementsByName('middleName')[0].value;
+            var lastName = document.getElementsByName('lastName')[0].value;
+            var password = generatePassword(firstName, middleName, lastName);
+            // Append password to form data
+            var passwordField = document.createElement('input');
+            passwordField.setAttribute('type', 'hidden');
+            passwordField.setAttribute('name', 'password');
+            passwordField.setAttribute('value', password);
+            document.getElementById('registrationForm').appendChild(passwordField);
+        });
+
+        function generatePassword(firstName, middleName, lastName) {
+            var password = '';
+            password += firstName.substring(0, 2);
+            password += middleName.substring(0, 2);
+            password += lastName.substring(0, 2);
+            password += Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // Generate random 3-digit number
+            return password;
+        }
+    </script>
+</body>
+</html>
